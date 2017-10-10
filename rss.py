@@ -11,7 +11,7 @@ from diskcache import Cache
 
 cache = Cache('/tmp/rsscache')
 
-
+rss_length=15
 
 app = Flask(__name__)
 client = discord.Client()
@@ -21,7 +21,7 @@ def hello():
     #del cache[b'items']
     if b'items' not in cache:
         if not b'get_items' in cache:
-            cache.set(b'items',getItems(),expire=30)
+            cache.set(b'items',getItems(),expire=600)
         else:
             import time
             while b'get_items' in cache:
@@ -55,7 +55,7 @@ def getItems():
 
 
         channel = client.get_channel('256392899720249344')
-        async for msg in client.logs_from(channel,limit=10):
+        async for msg in client.logs_from(channel,limit=rss_length):
             link = re.search(r'(https?:[^ \n]+)',msg.content)
             if link:
                 link = link.groups()[0]
@@ -64,7 +64,7 @@ def getItems():
                 title = getmeta(c,"og:title")
                 description = getmeta(c,"og:description")
                 image = getmeta(c,'og:image') or getmeta(c,'og:image:url')
-                print(title,description,link)
+
                 items.append(dict(titre=getmeta(c,"og:title"),
                              link=link,
                              image=image,

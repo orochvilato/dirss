@@ -12,10 +12,11 @@ from diskcache import Cache
 cache = Cache('/tmp/rsscache')
 
 
+
 app = Flask(__name__)
 client = discord.Client()
 
-@app.route("/test.xml")
+@app.route("/actualites.xml")
 def hello():
     #del cache[b'items']
     if b'items' not in cache:

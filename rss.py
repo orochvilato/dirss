@@ -4,6 +4,7 @@ import discord
 import asyncio
 import re
 import requests
+import email.utils
 import html
 from string import Template
 from flask import Flask,make_response, render_template
@@ -55,22 +56,28 @@ def getItems():
 
 
         channel = client.get_channel('256392899720249344')
-        async for msg in client.logs_from(channel,limit=rss_length):
-            link = re.search(r'(https?:[^ \n]+)',msg.content)
-            if link:
-                link = link.groups()[0]
-                r = requests.get(link)
-                c = r.content.decode('utf8')
-                title = getmeta(c,"og:title")
-                description = getmeta(c,"og:description")
-                image = getmeta(c,'og:image') or getmeta(c,'og:image:url')
 
-                items.append(dict(titre=getmeta(c,"og:title"),
+        async for msg in client.logs_from(channel,limit=rss_length):
+            links = re.search(r'(https?:[^ \n]+)',msg.content)
+
+            if links:
+                for link in links.groups():
+                    r = requests.get(link)
+                    c = r.content.decode(r.encoding)
+                    site = getmeta(c,"og:site_name")
+                    title = getmeta(c,"og:title")
+                    description = getmeta(c,"og:description")
+                    date = email.utils.format_datetime(msg.timestamp)
+                    image = getmeta(c,'og:image') or getmeta(c,'og:image:url')
+
+                    items.append(dict(titre=getmeta(c,"og:title"),
                              link=link,
+                             date=date,
+                             site=site,
                              image=image,
                              description=getmeta(c,"og:description")))
 
-        await client.logout()
+            await client.logout()
 
 
 

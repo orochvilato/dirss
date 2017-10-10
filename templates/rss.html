@@ -4,10 +4,11 @@
       <link>{{ link }}</link>
       <description>Test</description>
       {% for item in items %}<item>
-<title>{{ item['titre'] }}</title>
+<title>{% if item['site'] %}{{ item['site'] }} - {% endif %}{{ item['titre'] }}</title>
 <description>{% if item['image'] %}<![CDATA[
 <img align="left" width="200" hspace="8" src="{{ item['image']}}"/><br />
 ]]>{% endif %}{{ item['description'] }}</description>
+<pubDate>{{ item['date'] }}</pubDate>
 <link>{{ item['link'] }}</link></item>{% endfor %}
   </channel>
 </rss>

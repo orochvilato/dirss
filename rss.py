@@ -83,5 +83,5 @@ def getItems():
     del cache[b'get_items']
     return items
 
-app.run()
-exit()
+if __name__ == "__main__":
+    app.run()

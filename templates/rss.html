@@ -1,0 +1,13 @@
+<rss version="2.0">
+  <channel>
+      <title>Discord Insoumis - Actualités</title>
+      <link>{{ link }}</link>
+      <description>Test</description>
+      {% for item in items %}<item>
+<title>{{ item['titre'] }}</title>
+<description>{% if item['image'] %}<![CDATA[
+<img align="left" width="200" hspace="8" src="{{ item['image']}}"/><br />
+]]>{% endif %}{{ item['description'] }}</description>
+<link>{{ item['link'] }}</link></item>{% endfor %}
+  </channel>
+</rss>

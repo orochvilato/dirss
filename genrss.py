@@ -51,7 +51,10 @@ async def on_ready():
             if links:
                 for link in links.groups():
                     r = requests.get(link)
-                    c = r.content.decode(r.encoding)
+                    try:
+                        c = r.content.decode('utf8')
+                    except:
+                        c = r.content.decode(r.encoding)
 
                     site = getmeta(c,"og:site_name")
                     title = getmeta(c,"og:title")

@@ -1,8 +1,8 @@
 <rss version="2.0">
   <channel>
-      <title>Discord Insoumis - Actualités</title>
+      <title>Discord Insoumis - {{ label }}</title>
       <link>{{ link }}</link>
-      <description>Test</description>
+      <description></description>
       {% for item in items %}<item>
 <title>{% if item['site'] %}{{ item['site'] }} - {% endif %}{{ item['titre'] }}</title>
 <description>{% if item['image'] %}<![CDATA[

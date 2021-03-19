@@ -6,7 +6,7 @@ click==6.7
 discord.py==0.16.12
 idna==2.6
 itsdangerous==0.24
-Jinja2==2.9.6
+Jinja2==2.11.3
 lxml==4.0.0
 MarkupSafe==1.0
 multidict==3.2.0
